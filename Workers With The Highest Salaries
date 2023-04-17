@@ -1,0 +1,12 @@
+--You have been asked to find the job titles of the highest-paid employees.
+--Your output should include the highest-paid title or multiple titles with the same salary.
+--Tables: worker, title
+
+SELECT * FROM (
+    SELECT t.worker_title, w.salary, RANK() OVER (ORDER BY w.salary DESC) rank_number
+FROM worker w
+JOIN title t ON t.worker_ref_id = w.worker_id
+GROUP BY w.salary, t.worker_title
+ORDER BY salary DESC
+) a
+WHERE a.rank_number = 1
