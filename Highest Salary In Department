@@ -1,0 +1,11 @@
+--Find the employee with the highest salary per department.
+--Output the department name, employee's first name along with the corresponding salary.
+--Table: employee
+
+select e.department, e.first_name, e.salary
+from employee e
+join 
+(select department, max(salary) as m from employee
+group by department) as x
+on e.department = x.department
+where e.salary = x.m;
