@@ -1,0 +1,30 @@
+WITH max as (
+select 
+    month(record_date) months,
+    max(data_value) monthly_maximum
+    from temperature_records
+    where data_type = 'max'
+    group by months
+), min as(
+select 
+    month(record_date) months,
+    min(data_value) monthly_minimum
+    from temperature_records
+    where data_type = 'min'
+    group by months
+), avg as(
+select 
+    month(record_date) months,
+    round(avg(data_value)) monthly_average
+from temperature_records
+where data_type = 'avg'
+group by months
+)
+
+select 
+ max.months, 
+ max.monthly_maximum, 
+ min.monthly_minimum, 
+ avg.monthly_average
+from max join min on max.months = min.months 
+join avg on min.months=avg.months
