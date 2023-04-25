@@ -15,7 +15,6 @@ INSERT INTO public."WeekendHoursWorked"(
 	;
 
 
-
 with cte as (
 SELECT *, extract(isodow from timestamp) as day, 
 lag(timestamp) over(partition by emp_id, extract(isodow from timestamp) order by emp_id, timestamp) as clockout
